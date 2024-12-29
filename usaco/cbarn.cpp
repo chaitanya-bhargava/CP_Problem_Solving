@@ -23,28 +23,24 @@ const ll infl = 0x3f3f3f3f3f3f3f3fll;
 int main(){
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
-    ifstream cin("shuffle.in");
-    ofstream cout("shuffle.out");
+    ifstream cin("cbarn.in");
+    ofstream cout("cbarn.out");
     int n;
     cin>>n;
-    vector<int> a(n+1);
-    for(int i=1;i<=n;i++){
-        cin>>a[i];
+    vector<int> rooms(n);
+    for(int i=0;i<n;i++){
+        cin>>rooms[i];
     }
-    unordered_map<int,int> rev_mp;
-    for(int i=1;i<=n;i++){
-        rev_mp[a[i]]=i;
+    int mini=INT_MAX;
+    for(int i=0;i<n;i++){
+        int curr=0;
+        int ct=1;
+        for(int j=(i+1)%n;ct<n;j=(j+1)%n){
+            curr+=ct*rooms[j];
+            ct++;
+        }
+        mini=min(mini,curr);
     }
-    vector<int> cows(n+1);
-    for(int i=1;i<=n;i++){
-        cin>>cows[i];
-    }
-    vector<int> ans(n+1);
-    for(int i=1;i<=n;i++){
-        ans[rev_mp[rev_mp[rev_mp[i]]]]=cows[i];
-    }
-    for(int i=1;i<=n;i++){
-        cout<<ans[i]<<endl;
-    }
+    cout<<mini<<endl;
     return 0;
 }
